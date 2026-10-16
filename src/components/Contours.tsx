@@ -65,7 +65,6 @@ export default function Contours({ count = 22, className, animate = true, delay 
           d={d}
           stroke={stroke}
           strokeWidth={1}
-          vectorEffect="non-scaling-stroke"
           initial={play ? { pathLength: 0, opacity: 0 } : false}
           animate={{ pathLength: 1, opacity: 0.18 + (i / count) * 0.42 }}
           transition={{ duration: 2.2, delay: delay + i * 0.045, ease: [0.22, 1, 0.36, 1] }}

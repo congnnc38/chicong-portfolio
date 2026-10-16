@@ -35,7 +35,7 @@ export default function Hero() {
       <Contours className="absolute inset-0 -z-10 h-full w-full" />
 
       <motion.div
-        className="pointer-events-none absolute right-1/2 top-14 aspect-square w-[min(78vw,360px)] translate-x-1/2 md:top-auto md:right-[3vw] md:bottom-0 md:w-auto md:h-[min(80svh,780px)] md:translate-x-0"
+        className="pointer-events-none absolute right-1/2 top-14 aspect-square w-[min(78vw,360px)] translate-x-1/2 md:top-auto md:right-[max(3vw,calc((100vw-72rem)/2-8rem))] md:bottom-0 md:w-auto md:h-[min(80svh,780px)] md:translate-x-0"
         initial={reduce ? false : { opacity: 0, y: 24 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 1.4, delay: 0.15, ease }}
