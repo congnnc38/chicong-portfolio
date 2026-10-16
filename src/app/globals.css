@@ -1,0 +1,87 @@
+@import '@fontsource-variable/bricolage-grotesque/standard.css';
+@import '@fontsource/be-vietnam-pro/400.css';
+@import '@fontsource/be-vietnam-pro/500.css';
+@import '@fontsource/be-vietnam-pro/600.css';
+@import 'tailwindcss';
+
+@theme {
+  /* Màu lấy từ phông nền ảnh chân dung để ảnh hoà vào hero */
+  --color-slate: #37546a;
+  --color-slate-deep: #22343f;
+  --color-paper: #edf1f3;
+  --color-paper-2: #e1e8ec;
+  --color-ink: #15232c;
+  --color-ink-soft: #4a5d6a;
+  --color-line: #7cc4e0;
+  --color-sea: #1c6f93;
+  --color-amber: #f0b44c;
+
+  --font-display: 'Bricolage Grotesque Variable', 'Be Vietnam Pro', system-ui, sans-serif;
+  --font-sans: 'Be Vietnam Pro', system-ui, sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 5rem;
+}
+
+body {
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  font-size: 1.0625rem;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: var(--color-amber);
+  color: var(--color-ink);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-amber);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+.display {
+  font-family: var(--font-display);
+  font-variation-settings: 'wdth' 80, 'opsz' 96;
+  letter-spacing: -0.02em;
+  line-height: 0.95;
+}
+
+.display-wide {
+  font-family: var(--font-display);
+  font-variation-settings: 'wdth' 100, 'opsz' 48;
+  letter-spacing: -0.015em;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Ảnh chân dung hoà vào nền hero: mờ dần ở mép trên và hai bên */
+.portrait-mask {
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 24%), linear-gradient(to right, transparent 0%, #000 20%, #000 80%, transparent 100%);
+  -webkit-mask-composite: source-in;
+  mask-image: linear-gradient(to bottom, transparent 0%, #000 24%), linear-gradient(to right, transparent 0%, #000 20%, #000 80%, transparent 100%);
+  mask-composite: intersect;
+}
+
+@media (max-width: 767px) {
+  .portrait-mask {
+    -webkit-mask-image: radial-gradient(closest-side, #000 62%, transparent 100%);
+    mask-image: radial-gradient(closest-side, #000 62%, transparent 100%);
+  }
+}
