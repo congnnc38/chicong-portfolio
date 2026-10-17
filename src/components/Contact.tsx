@@ -19,6 +19,20 @@ export default function Contact() {
           {email}
         </a>
 
+        <div className="mt-10">
+          <a
+            href={profile.cv.href}
+            download={profile.cv.fileName}
+            className="inline-flex h-12 items-center gap-2.5 rounded-full bg-paper px-6 font-semibold text-ink transition-colors hover:bg-amber"
+          >
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <path d="M8 2v8m0 0L4.5 6.5M8 10l3.5-3.5M3 13h10" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+            Tải CV bản PDF
+          </a>
+          <p className="mt-3 text-sm text-paper/60">Khổ A4, 2 trang, in được ngay.</p>
+        </div>
+
         <ul className="mt-10 flex flex-wrap gap-x-10 gap-y-4 text-lg">
           <li>
             <a href={linkedin} target="_blank" rel="noopener noreferrer" className="text-paper/85 hover:text-paper">

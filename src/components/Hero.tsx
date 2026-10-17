@@ -83,6 +83,16 @@ export default function Hero() {
             >
               Gửi email cho tôi
             </a>
+            <a
+              href={profile.cv.href}
+              download={profile.cv.fileName}
+              className="inline-flex h-12 items-center gap-2 px-3 font-medium text-paper/85 underline decoration-paper/40 underline-offset-4 transition-colors hover:text-paper hover:decoration-paper"
+            >
+              <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                <path d="M8 2v8m0 0L4.5 6.5M8 10l3.5-3.5M3 13h10" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+              Tải CV (PDF)
+            </a>
           </motion.div>
 
           <motion.p {...fade(1.2)} className="mt-12 text-sm text-paper/60">

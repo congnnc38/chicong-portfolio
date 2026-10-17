@@ -34,6 +34,8 @@ export const profile = {
     'Tôi bắt đầu đi làm năm 2018 với vai trò UI/UX Designer, rồi chuyển sang viết code từ 2019. Nền tảng thiết kế giúp tôi làm giao diện kỹ ở từng chi tiết, còn những năm gần đây tôi làm cả backend: NestJS, Prisma, hàng đợi BullMQ, realtime với Socket.IO.',
     'Từ 2025 tôi làm ở NetSpace, phát triển hệ sinh thái AntCMS cho các toà soạn (VietPress, Góc Nhìn Mới, phobienphapluat.vn), thư viện template E-magazine dùng chung, cổng thông tin kol.gov.vn và hệ thống kiểm duyệt video bằng AI.',
   ],
+  // File CV đặt trong thư mục public/. Thay file mới thì giữ nguyên tên, hoặc sửa đường dẫn ở đây.
+  cv: { href: '/CV-Ngo-Nguyen-Chi-Cong.pdf', fileName: 'CV-Ngo-Nguyen-Chi-Cong.pdf' },
   contact: {
     email: 'congnnc38@gmail.com',
     phone: '+84 33 224 9402',

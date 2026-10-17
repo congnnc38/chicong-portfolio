@@ -40,6 +40,13 @@ export default function Nav() {
             </a>
           ))}
           <a
+            href={profile.cv.href}
+            download={profile.cv.fileName}
+            className="rounded-full px-3 py-2 text-[0.95rem] font-medium opacity-80 transition-opacity hover:opacity-100"
+          >
+            Tải CV
+          </a>
+          <a
             href="#lien-he"
             className={`rounded-full px-4 py-2 text-[0.95rem] font-semibold transition-colors ${
               solid ? 'bg-ink text-paper hover:bg-slate' : 'bg-paper/15 hover:bg-paper/25'
