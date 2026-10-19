@@ -27,12 +27,12 @@ export type Job = {
 export const profile = {
   name: 'Ngô Nguyễn Chí Công',
   shortName: 'Chí Công',
-  title: 'Frontend & Fullstack Developer',
+  title: 'Fullstack Developer, Frontend First',
   intro:
-    'Tôi xây sản phẩm web cho toà soạn, doanh nghiệp và các nền tảng nội dung: từ giao diện, trình soạn thảo đến API, hàng đợi và hạ tầng triển khai.',
+    'Tôi xây sản phẩm web và app di động cho toà soạn, doanh nghiệp và các nền tảng nội dung: từ giao diện, trình soạn thảo đến API, hàng đợi và hạ tầng triển khai.',
   about: [
-    'Tôi bắt đầu đi làm năm 2018 với vai trò UI/UX Designer, rồi chuyển sang viết code từ 2019. Nền tảng thiết kế giúp tôi làm giao diện kỹ ở từng chi tiết, còn những năm gần đây tôi làm cả backend: NestJS, Prisma, hàng đợi BullMQ, realtime với Socket.IO.',
-    'Từ 2025 tôi làm ở NetSpace, phát triển hệ sinh thái AntCMS cho các toà soạn (VietPress, Góc Nhìn Mới, phobienphapluat.vn), thư viện template E-magazine dùng chung, cổng thông tin kol.gov.vn và hệ thống kiểm duyệt video bằng AI.',
+    'Tôi khởi đầu với vai trò UI/UX Designer rồi chuyển sang viết code. Nền tảng thiết kế giúp tôi làm giao diện kỹ ở từng chi tiết, còn những năm gần đây tôi làm cả backend: NestJS, Prisma, hàng đợi BullMQ, realtime với Socket.IO.',
+    'Từ 2025 tôi làm ở NetSpace, phát triển hệ sinh thái AntCMS cho các toà soạn (VietPress, Góc Nhìn Mới, phobienphapluat.vn), thư viện template E-magazine dùng chung, cổng thông tin kol.gov.vn, hệ thống kiểm duyệt video bằng AI và các app di động React Native cho Thiên Khôi Group.',
   ],
   // File CV đặt trong thư mục public/. Thay file mới thì giữ nguyên tên, hoặc sửa đường dẫn ở đây.
   cv: { href: '/CV-Ngo-Nguyen-Chi-Cong.pdf', fileName: 'CV-Ngo-Nguyen-Chi-Cong.pdf' },
@@ -122,6 +122,38 @@ export const projects: Project[] = [
     ],
   },
   {
+    id: 'tkg-mobile',
+    name: 'TKG Proptech & Thiên Khôi HRM',
+    summary: 'Hai app di động cho đội ngũ môi giới và nhân sự Thiên Khôi Group',
+    role: 'Frontend',
+    period: '06 – 07/2026',
+    linkNote: 'Ứng dụng iOS và Android cho đội ngũ Thiên Khôi Group',
+    description:
+      'TKG Proptech giúp tư vấn viên và môi giới quản lý kho nguồn hàng bất động sản, ký gửi, giao dịch và tranh chấp. Thiên Khôi HRM quản lý nhân sự theo cơ cấu Miền, Kinh đô, chi nhánh, khối, phòng: tuyển dụng, đào tạo, sự kiện và phân quyền. Thiên Khôi Group được vinh danh Top 5 Proptech 2026 với hệ sinh thái gồm hai app này.',
+    stack: ['React Native 0.78', 'TypeScript', 'React Navigation', 'TanStack Query', 'Zustand', 'MMKV', 'React Hook Form', 'Firebase', 'Fastlane'],
+    contributions: [
+      'TKG Proptech: làm lại màn kho nguồn hàng theo Figma, gồm thẻ nguồn hàng, thanh tìm kiếm, bộ lọc nhanh và sắp xếp, lọc theo loại nguồn và thời gian ký, tag “Triệu đô” và “Dòng tiền ổn định”.',
+      'Thiên Khôi HRM: tab lọc nhanh sự kiện có đếm số và ẩn hiện theo quyền; chọn phạm vi người tham gia theo Miền, Kinh đô, Khối, Phòng đúng quyền của từng vai trò; danh sách điểm danh có tìm kiếm, lọc và xuất Excel.',
+      'Cảnh báo khi rời màn đang nhập dở cho 28 màn tạo và sửa ở cả hai app; tự điền sẵn form tranh chấp từ dữ liệu vừa nhập.',
+      'Mục “Hệ sinh thái Thiên Khôi” trong menu với deep link qua lại giữa hai app; sửa lỗi xem ảnh dạng slide.',
+    ],
+  },
+  {
+    id: 'thienviet-id',
+    name: 'Thiên Việt ID',
+    summary: 'App tài khoản và tiện ích dùng chung cho hệ thống Thiên Việt',
+    role: 'Fullstack',
+    period: '06/2026',
+    linkNote: 'Ứng dụng di động iOS và Android',
+    description:
+      'Một tài khoản cho cả hệ thống: đăng nhập một lần, nạp tiền và lịch sử giao dịch, chat và gọi thoại, đặt món ở nhà hàng và quán cà phê, đào tạo, tin tức. Nằm trong monorepo Turborepo gồm app Expo, backend ElysiaJS và các web Next.js.',
+    stack: ['Expo 55', 'React Native', 'Expo Router', 'ElysiaJS', 'Bun', 'Drizzle', 'PostgreSQL', 'Better Auth', 'TanStack Query', 'Zustand'],
+    contributions: [
+      'Làm trọn luồng đặt cà phê trên app: menu theo danh mục, món có nhóm tuỳ chọn chọn nhiều và tính thêm tiền, giỏ hàng, thanh toán, nhận voucher.',
+      'Phía backend: module đơn hàng, menu và voucher của người dùng (ElysiaJS), schema và migration Drizzle, script tạo dữ liệu mẫu.',
+    ],
+  },
+  {
     id: 'hien-mau',
     name: 'Hiến máu Thiên Khôi',
     summary: 'Quản lý sự kiện hiến máu theo thời gian thực',
@@ -147,11 +179,28 @@ export const projects: Project[] = [
     link: { href: 'https://kol.gov.vn/', label: 'kol.gov.vn' },
     description:
       'Bảng xếp hạng KOL và MCN theo tăng trưởng tương tác thực, Top 100, hồ sơ chi tiết, khai báo hồ sơ cho KOL và MCN, báo cáo vi phạm, tin tức. Kèm nền tảng chiến dịch cho KOL và Nhãn hàng, crawler dữ liệu mạng xã hội chạy nền.',
-    stack: ['Next.js 15', 'Prisma', 'PostgreSQL', 'BullMQ', 'Redis', 'Better-Auth', 'Turborepo', 'Kubernetes'],
+    stack: ['Next.js 15', 'Prisma', 'PostgreSQL', 'BullMQ', 'Redis', 'Better-Auth', 'Turborepo', 'Kubernetes', 'Laravel Filament'],
     contributions: [
       'Trang chủ, tìm kiếm, Top 100, trang chi tiết KOL và MCN, ticker bảng xếp hạng.',
       'Form khai báo KOL/MCN: upload media, tự nhận diện nền tảng từ link kênh, xác thực nghiệp vụ.',
       'Form báo cáo vi phạm; trang profile và đăng ký chiến dịch trên KOLs Platform.',
+      'Trang quản trị Laravel Filament: widget tổng hợp kiểm duyệt theo kỳ trên dashboard báo cáo, lọc bài viết theo nguồn, danh mục hoạt động ở trang Influencer.',
+    ],
+  },
+  {
+    id: 'antcms-templates',
+    name: 'AntCMS Templates',
+    summary: 'Một bộ mã giao diện cho nhiều toà soạn trên AntCMS',
+    role: 'Frontend',
+    period: '03 – 05/2026',
+    linkNote: 'Giao diện cho Reatimes, Thế giới Điện ảnh và Góc Nhìn Mới',
+    description:
+      'Monorepo cho các trang tin chạy trên AntCMS: mỗi toà soạn (tenant) chọn template, màu và font riêng, dùng chung section, component và lớp gọi API. Gồm app chạy theo tenant và các app riêng cho Reatimes, Thế giới Điện ảnh, Góc Nhìn Mới.',
+    stack: ['Next.js 15', 'React 19', 'TypeScript', 'Tailwind', 'pnpm', 'Turborepo', 'Docker'],
+    contributions: [
+      'Trang chủ theo tenant, độ rộng riêng cho từng site; tách tenant khỏi template để một template dùng được cho nhiều toà soạn.',
+      'Đổi màu và font theo cấu hình của từng site, áp cả cho trang chi tiết.',
+      'Template Cinematic, trang chủ Reatimes, làm lại các trang Thế giới Điện ảnh; trang chuyên mục, chuyên trang, tag, tìm kiếm, video, trung tâm hỗ trợ và bảng thao tác nổi cho template Góc Nhìn Mới.',
     ],
   },
   {
@@ -259,7 +308,7 @@ export const jobs: Job[] = [
   {
     company: 'NetSpace',
     period: '06/2025 – nay',
-    positions: [{ title: 'Frontend & Fullstack Developer', period: '06/2025 – nay' }],
+    positions: [{ title: 'Fullstack Developer', period: '06/2025 – nay' }],
     note: 'Các dự án ở phần trên.',
   },
   {
@@ -345,11 +394,11 @@ export const jobs: Job[] = [
 export const skills: { group: string; items: string[] }[] = [
   {
     group: 'Giao diện',
-    items: ['Next.js 15/16', 'React 19', 'TypeScript', 'Tailwind CSS', 'shadcn/ui · Radix', 'Ant Design', 'MUI', 'Framer Motion', 'TanStack Query', 'Zustand', 'React Hook Form · Zod', 'BlockNote', 'next-intl'],
+    items: ['Next.js 15/16', 'React 19', 'TypeScript', 'Tailwind CSS', 'shadcn/ui · Radix', 'Ant Design', 'MUI', 'Framer Motion', 'TanStack Query', 'Zustand', 'React Hook Form · Zod', 'BlockNote', 'next-intl', 'React Native · Expo'],
   },
   {
     group: 'Backend',
-    items: ['NestJS', 'Next.js API', 'oRPC', 'Payload CMS', 'Prisma', 'Drizzle', 'PostgreSQL', 'Redis', 'BullMQ', 'Socket.IO', 'JWT · Better-Auth', 'S3'],
+    items: ['NestJS', 'ElysiaJS', 'Next.js API', 'oRPC', 'Payload CMS', 'Prisma', 'Drizzle', 'PostgreSQL', 'Redis', 'BullMQ', 'Socket.IO', 'JWT · Better-Auth', 'S3'],
   },
   {
     group: 'Triển khai',

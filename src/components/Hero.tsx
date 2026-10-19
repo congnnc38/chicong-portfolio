@@ -96,7 +96,7 @@ export default function Hero() {
           </motion.div>
 
           <motion.p {...fade(1.2)} className="mt-12 text-sm text-paper/60">
-            Đang làm ở NetSpace. Viết code từ 2019, trước đó là UI/UX Designer.
+            Đang làm ở NetSpace. Khởi đầu là UI/UX Designer, rồi chuyển sang viết code.
           </motion.p>
         </div>
 

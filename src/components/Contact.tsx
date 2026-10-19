@@ -9,7 +9,7 @@ export default function Contact() {
       <div className="mx-auto max-w-6xl px-5 py-24 sm:px-8 md:py-36">
         <h2 className="display text-[clamp(2.8rem,7vw,5rem)] font-[650]">Cùng làm việc nhé</h2>
         <p className="mt-5 max-w-[48ch] text-paper/80">
-          Tôi sẵn sàng trao đổi về vị trí Frontend hoặc Fullstack, hay một sản phẩm web bạn đang muốn làm.
+          Tôi sẵn sàng trao đổi về vị trí Fullstack (thế mạnh frontend), hay một sản phẩm web bạn đang muốn làm.
         </p>
 
         <a
