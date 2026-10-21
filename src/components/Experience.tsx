@@ -88,7 +88,7 @@ export default function Experience() {
       <div className="mx-auto max-w-6xl px-5 py-24 sm:px-8 md:py-32">
         <h2 className="display text-[clamp(2.8rem,7vw,5rem)] font-[650]">Kinh nghiệm</h2>
         <p className="mt-4 max-w-[46ch] text-ink-soft">
-          Tám năm qua bốn công ty, từ thiết kế giao diện sang frontend rồi fullstack.
+          Qua bốn công ty, từ thiết kế giao diện sang frontend rồi fullstack.
         </p>
         <ol className="relative mt-16">
           <span aria-hidden="true" className="absolute top-3 bottom-3 left-[6px] w-px bg-ink/20 md:left-[12rem]" />
