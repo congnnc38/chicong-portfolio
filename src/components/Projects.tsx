@@ -2,32 +2,34 @@
 
 import { AnimatePresence, LayoutGroup, motion, useReducedMotion } from 'motion/react';
 import { useState } from 'react';
-import { projects, type Role } from '@/data/profile';
+import type { Role } from '@/data/profile';
+import { getContent, type Lang } from '@/i18n';
 
-type Filter = 'Tất cả' | Role;
-const filters: Filter[] = ['Tất cả', 'Frontend', 'Fullstack'];
+type Filter = 'all' | Role;
+const filters: Filter[] = ['all', 'Frontend', 'Fullstack'];
 const ease = [0.22, 1, 0.36, 1] as const;
 
-export default function Projects() {
-  const [filter, setFilter] = useState<Filter>('Tất cả');
+export default function Projects({ lang }: { lang: Lang }) {
+  const { projects, t } = getContent(lang);
+  const [filter, setFilter] = useState<Filter>('all');
   const [open, setOpen] = useState<string | null>(projects[0].id);
   const reduce = useReducedMotion();
 
-  const list = filter === 'Tất cả' ? projects : projects.filter((p) => p.role === filter);
-  const count = (f: Filter) => (f === 'Tất cả' ? projects.length : projects.filter((p) => p.role === f).length);
+  const list = filter === 'all' ? projects : projects.filter((p) => p.role === filter);
+  const count = (f: Filter) => (f === 'all' ? projects.length : projects.filter((p) => p.role === f).length);
 
   return (
     <section id="du-an" className="mx-auto max-w-6xl px-5 py-24 sm:px-8 md:py-32">
       <div className="flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
         <div>
-          <h2 className="display text-[clamp(2.8rem,7vw,5rem)] font-[650]">Dự án</h2>
+          <h2 className="display text-[clamp(2.8rem,7vw,5rem)] font-[650]">{t.projects.title}</h2>
           <p className="mt-4 max-w-[46ch] text-ink-soft">
-            {projects.length} sản phẩm tôi làm từ 2025 đến nay, mới nhất ở trên. Chọn một dự án để xem tôi đã làm những phần nào.
+            {t.projects.intro(projects.length)}
           </p>
         </div>
 
         <LayoutGroup>
-          <div role="group" aria-label="Lọc theo vai trò" className="flex w-fit rounded-full bg-paper-2 p-1">
+          <div role="group" aria-label={t.projects.filterLabel} className="flex w-fit rounded-full bg-paper-2 p-1">
             {filters.map((f) => {
               const active = f === filter;
               return (
@@ -45,7 +47,7 @@ export default function Projects() {
                     />
                   )}
                   <span className={`relative ${active ? 'text-paper' : 'text-ink-soft'}`}>
-                    {f} <span className="tabular-nums opacity-70">{count(f)}</span>
+                    {f === 'all' ? t.projects.all : f} <span className="tabular-nums opacity-70">{count(f)}</span>
                   </span>
                 </button>
               );
@@ -119,7 +121,7 @@ export default function Projects() {
                         <div className="hidden md:block" />
                         <div>
                           <p className="max-w-[62ch]">{p.description}</p>
-                          <h4 className="mt-7 font-semibold">Phần tôi làm</h4>
+                          <h4 className="mt-7 font-semibold">{t.projects.myPart}</h4>
                           <ul className="mt-3 max-w-[62ch] space-y-2.5">
                             {p.contributions.map((c) => (
                               <li key={c} className="relative pl-5 text-ink-soft">
@@ -131,7 +133,7 @@ export default function Projects() {
                         </div>
                         <div className="md:border-l md:border-ink/15 md:pl-6">
                           <span className="text-sm text-ink-soft md:hidden">{p.role}</span>
-                          <h4 className="mt-1 font-semibold md:mt-0">Công nghệ</h4>
+                          <h4 className="mt-1 font-semibold md:mt-0">{t.projects.stack}</h4>
                           <ul className="mt-3 flex flex-wrap gap-2">
                             {p.stack.map((s) => (
                               <li key={s} className="rounded-md border border-ink/15 bg-white/50 px-2.5 py-1 text-sm">
@@ -146,7 +148,7 @@ export default function Projects() {
                               rel="noopener noreferrer"
                               className="mt-7 inline-flex items-center gap-2 rounded-full bg-ink px-5 py-2.5 font-medium text-paper transition-colors hover:bg-sea"
                             >
-                              Mở trang web
+                              {t.projects.open}
                               <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
                                 <path d="M3 9L9 3M4 3h5v5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
                               </svg>

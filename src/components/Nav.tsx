@@ -1,15 +1,17 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { profile } from '@/data/profile';
+import Link from 'next/link';
+import { getContent, home, type Lang } from '@/i18n';
 
-const links = [
-  { href: '#du-an', label: 'Dự án' },
-  { href: '#kinh-nghiem', label: 'Kinh nghiệm' },
-  { href: '#ky-nang', label: 'Kỹ năng' },
-];
-
-export default function Nav() {
+export default function Nav({ lang }: { lang: Lang }) {
+  const { profile, t } = getContent(lang);
+  const links = [
+    { href: '#du-an', label: t.nav.projects },
+    { href: '#kinh-nghiem', label: t.nav.experience },
+    { href: '#ky-nang', label: t.nav.skills },
+  ];
+  const other: Lang = lang === 'vi' ? 'en' : 'vi';
   const [solid, setSolid] = useState(false);
 
   useEffect(() => {
@@ -25,7 +27,7 @@ export default function Nav() {
         solid ? 'bg-paper/85 text-ink shadow-[0_1px_0_var(--color-paper-2)] backdrop-blur-md' : 'text-paper'
       }`}
     >
-      <nav className="mx-auto flex h-16 max-w-6xl items-center justify-between px-5 sm:px-8" aria-label="Điều hướng chính">
+      <nav className="mx-auto flex h-16 max-w-6xl items-center justify-between px-5 sm:px-8" aria-label={t.nav.label}>
         <a href="#top" className="display-wide text-lg font-semibold">
           {profile.shortName}
         </a>
@@ -44,15 +46,24 @@ export default function Nav() {
             download={profile.cv.fileName}
             className="rounded-full px-3 py-2 text-[0.95rem] font-medium opacity-80 transition-opacity hover:opacity-100"
           >
-            Tải CV
+            {t.nav.cv}
           </a>
+          <Link
+            href={home[other]}
+            hrefLang={other}
+            lang={other}
+            aria-label={t.nav.switchTo}
+            className="rounded-full px-3 py-2 text-[0.95rem] font-semibold opacity-80 transition-opacity hover:opacity-100"
+          >
+            <span aria-hidden="true">{other.toUpperCase()}</span>
+          </Link>
           <a
             href="#lien-he"
             className={`rounded-full px-4 py-2 text-[0.95rem] font-semibold transition-colors ${
               solid ? 'bg-ink text-paper hover:bg-slate' : 'bg-paper/15 hover:bg-paper/25'
             }`}
           >
-            Liên hệ
+            {t.nav.contact}
           </a>
         </div>
       </nav>

@@ -16,6 +16,11 @@ Mở http://localhost:3000.
 Toàn bộ chữ, dự án, kinh nghiệm, kỹ năng và thông tin liên hệ nằm trong **`src/data/profile.ts`**.
 Sửa ở đó là website đổi theo, không cần đụng vào component.
 
+Website có 2 ngôn ngữ: tiếng Việt ở `/`, tiếng Anh ở `/en` (nút VI/EN trên thanh menu).
+- Nội dung tiếng Anh: **`src/data/profile.en.ts`** (cùng cấu trúc với `profile.ts`, sửa bên này thì nhớ sửa bên kia).
+- Chữ trên nút, tiêu đề mục của cả 2 ngôn ngữ: **`src/i18n.ts`**.
+- CV: bản tiếng Việt `public/CV-Ngo-Nguyen-Chi-Cong.pdf`, bản tiếng Anh `public/CV-Ngo-Nguyen-Chi-Cong-EN.pdf`.
+
 - Đổi ảnh: thay file `public/avatar.jpg` (ảnh vuông, nền xanh xám như ảnh hiện tại sẽ hoà vào nền hero đẹp nhất).
 - Màu và font: `src/app/globals.css` (khối `@theme`).
 

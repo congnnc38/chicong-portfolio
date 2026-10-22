@@ -3,11 +3,12 @@
 import Image from 'next/image';
 import { motion, useReducedMotion } from 'motion/react';
 import Contours from './Contours';
-import { profile } from '@/data/profile';
+import { getContent, type Lang } from '@/i18n';
 
 const ease = [0.22, 1, 0.36, 1] as const;
 
-export default function Hero() {
+export default function Hero({ lang }: { lang: Lang }) {
+  const { profile, t } = getContent(lang);
   const reduce = useReducedMotion();
   const [first, ...rest] = profile.name.split(' ');
   const lines = [first + ' ' + rest[0], rest.slice(1).join(' ')];
@@ -42,7 +43,7 @@ export default function Hero() {
       >
         <Image
           src="/avatar.jpg"
-          alt={`Ảnh chân dung ${profile.name}`}
+          alt={`${t.hero.portraitAlt} ${profile.name}`}
           fill
           priority
           sizes="(min-width: 768px) 780px, 78vw"
@@ -75,13 +76,13 @@ export default function Hero() {
               href="#du-an"
               className="inline-flex h-12 items-center rounded-full bg-amber px-6 font-semibold text-ink transition-colors hover:bg-paper"
             >
-              Xem các dự án
+              {t.hero.seeProjects}
             </a>
             <a
               href={`mailto:${profile.contact.email}`}
               className="inline-flex h-12 items-center rounded-full border border-paper/40 px-6 font-medium text-paper transition-colors hover:border-paper hover:bg-paper/10"
             >
-              Gửi email cho tôi
+              {t.hero.email}
             </a>
             <a
               href={profile.cv.href}
@@ -91,12 +92,12 @@ export default function Hero() {
               <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true">
                 <path d="M8 2v8m0 0L4.5 6.5M8 10l3.5-3.5M3 13h10" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
-              Tải CV (PDF)
+              {t.hero.cv}
             </a>
           </motion.div>
 
           <motion.p {...fade(1.2)} className="mt-12 text-sm text-paper/60">
-            Đang làm ở NetSpace. Khởi đầu là UI/UX Designer, rồi chuyển sang viết code.
+            {t.hero.footnote}
           </motion.p>
         </div>
 

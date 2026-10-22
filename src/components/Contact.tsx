@@ -1,15 +1,16 @@
 import Contours from './Contours';
-import { profile } from '@/data/profile';
+import { getContent, type Lang } from '@/i18n';
 
-export default function Contact() {
+export default function Contact({ lang }: { lang: Lang }) {
+  const { profile, t } = getContent(lang);
   const { email, phone, phoneHref, linkedin, linkedinLabel } = profile.contact;
   return (
     <section id="lien-he" className="relative isolate overflow-hidden bg-slate-deep text-paper">
       <Contours count={14} animate={false} className="absolute inset-0 -z-10 h-full w-full opacity-70" />
       <div className="mx-auto max-w-6xl px-5 py-24 sm:px-8 md:py-36">
-        <h2 className="display text-[clamp(2.8rem,7vw,5rem)] font-[650]">Cùng làm việc nhé</h2>
+        <h2 className="display text-[clamp(2.8rem,7vw,5rem)] font-[650]">{t.contact.title}</h2>
         <p className="mt-5 max-w-[48ch] text-paper/80">
-          Tôi sẵn sàng trao đổi về vị trí Fullstack (thế mạnh frontend), hay một sản phẩm web bạn đang muốn làm.
+          {t.contact.intro}
         </p>
 
         <a
@@ -28,9 +29,9 @@ export default function Contact() {
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
               <path d="M8 2v8m0 0L4.5 6.5M8 10l3.5-3.5M3 13h10" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
-            Tải CV bản PDF
+            {t.contact.cv}
           </a>
-          <p className="mt-3 text-sm text-paper/60">Khổ A4, 2 trang, in được ngay.</p>
+          <p className="mt-3 text-sm text-paper/60">{t.contact.cvNote}</p>
         </div>
 
         <ul className="mt-10 flex flex-wrap gap-x-10 gap-y-4 text-lg">
@@ -41,7 +42,7 @@ export default function Contact() {
           </li>
           <li>
             <a href={phoneHref} className="text-paper/85 hover:text-paper">
-              Điện thoại: <span className="underline underline-offset-4">{phone}</span>
+              {t.contact.phone}: <span className="underline underline-offset-4">{phone}</span>
             </a>
           </li>
         </ul>

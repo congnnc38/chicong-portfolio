@@ -2,11 +2,13 @@
 
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 import { useState } from 'react';
-import { jobs, type Job } from '@/data/profile';
+import type { Job } from '@/data/profile';
+import { getContent, type Lang } from '@/i18n';
 
 const ease = [0.22, 1, 0.36, 1] as const;
 
-function JobItem({ job, current }: { job: Job; current: boolean }) {
+function JobItem({ job, current, lang }: { job: Job; current: boolean; lang: Lang }) {
+  const { t } = getContent(lang);
   const [open, setOpen] = useState(false);
   const reduce = useReducedMotion();
   const n = job.projects?.length ?? 0;
@@ -41,7 +43,7 @@ function JobItem({ job, current }: { job: Job; current: boolean }) {
                 aria-expanded={open}
                 className="mt-5 inline-flex items-center gap-2 rounded-full border border-ink/20 px-4 py-2 text-[0.95rem] font-medium transition-colors hover:border-ink"
               >
-                {open ? 'Ẩn dự án' : `Xem ${n} dự án`}
+                {open ? t.experience.hide : t.experience.show(n)}
                 <svg
                   width="12"
                   height="12"
@@ -82,18 +84,19 @@ function JobItem({ job, current }: { job: Job; current: boolean }) {
   );
 }
 
-export default function Experience() {
+export default function Experience({ lang }: { lang: Lang }) {
+  const { jobs, t } = getContent(lang);
   return (
     <section id="kinh-nghiem" className="bg-[#e4eaee]">
       <div className="mx-auto max-w-6xl px-5 py-24 sm:px-8 md:py-32">
-        <h2 className="display text-[clamp(2.8rem,7vw,5rem)] font-[650]">Kinh nghiệm</h2>
+        <h2 className="display text-[clamp(2.8rem,7vw,5rem)] font-[650]">{t.experience.title}</h2>
         <p className="mt-4 max-w-[46ch] text-ink-soft">
-          Qua bốn công ty, từ thiết kế giao diện sang frontend rồi fullstack.
+          {t.experience.intro}
         </p>
         <ol className="relative mt-16">
           <span aria-hidden="true" className="absolute top-3 bottom-3 left-[6px] w-px bg-ink/20 md:left-[12rem]" />
           {jobs.map((job, i) => (
-            <JobItem key={job.company} job={job} current={i === 0} />
+            <JobItem key={job.company} job={job} current={i === 0} lang={lang} />
           ))}
         </ol>
       </div>
