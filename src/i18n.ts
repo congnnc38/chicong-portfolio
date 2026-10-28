@@ -30,7 +30,7 @@ const ui = {
     },
     experience: {
       title: 'Kinh nghiệm',
-      intro: 'Qua bốn công ty, từ thiết kế giao diện sang frontend rồi fullstack.',
+      intro: '5 năm kinh nghiệm qua bốn công ty, từ thiết kế giao diện sang frontend rồi fullstack.',
       hide: 'Ẩn dự án',
       show: (n: number) => `Xem ${n} dự án`,
     },
@@ -69,7 +69,7 @@ const ui = {
     },
     experience: {
       title: 'Experience',
-      intro: 'Four companies, from interface design to frontend and then fullstack.',
+      intro: '5 years across four companies, from interface design to frontend and then fullstack.',
       hide: 'Hide projects',
       show: (n: number) => `See ${n} project${n > 1 ? 's' : ''}`,
     },

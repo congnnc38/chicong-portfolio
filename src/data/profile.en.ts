@@ -8,7 +8,7 @@ export const profile = {
   shortName: 'Chí Công',
   title: 'Fullstack Developer, Frontend First',
   intro:
-    'I build web products and mobile apps for newsrooms, businesses and content platforms: from the interface and editors to APIs, queues and deployment infrastructure.',
+    'With 5 years of experience, I build web products and mobile apps for newsrooms, businesses and content platforms: from the interface and editors to APIs, queues and deployment infrastructure.',
   about: [
     'I started out as a UI/UX Designer before moving into code. That design background makes me careful with every detail of an interface, and in recent years I have also worked on the backend: NestJS, Prisma, BullMQ queues, realtime with Socket.IO.',
     'Since 2025 I have been at NetSpace, building the AntCMS ecosystem for newsrooms (VietPress, Góc Nhìn Mới, phobienphapluat.vn), a shared E-magazine template library, the kol.gov.vn portal, an AI video moderation system and React Native mobile apps for Thien Khoi Group.',

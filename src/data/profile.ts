@@ -29,7 +29,7 @@ export const profile = {
   shortName: 'Chí Công',
   title: 'Fullstack Developer, Frontend First',
   intro:
-    'Tôi xây sản phẩm web và app di động cho toà soạn, doanh nghiệp và các nền tảng nội dung: từ giao diện, trình soạn thảo đến API, hàng đợi và hạ tầng triển khai.',
+    'Với 5 năm kinh nghiệm, tôi xây sản phẩm web và app di động cho toà soạn, doanh nghiệp và các nền tảng nội dung: từ giao diện, trình soạn thảo đến API, hàng đợi và hạ tầng triển khai.',
   about: [
     'Tôi khởi đầu với vai trò UI/UX Designer rồi chuyển sang viết code. Nền tảng thiết kế giúp tôi làm giao diện kỹ ở từng chi tiết, còn những năm gần đây tôi làm cả backend: NestJS, Prisma, hàng đợi BullMQ, realtime với Socket.IO.',
     'Từ 2025 tôi làm ở NetSpace, phát triển hệ sinh thái AntCMS cho các toà soạn (VietPress, Góc Nhìn Mới, phobienphapluat.vn), thư viện template E-magazine dùng chung, cổng thông tin kol.gov.vn, hệ thống kiểm duyệt video bằng AI và các app di động React Native cho Thiên Khôi Group.',
