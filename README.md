@@ -1,6 +1,9 @@
 # Portfolio — Ngô Nguyễn Chí Công
 
-Website portfolio cá nhân, làm bằng Next.js 15, Tailwind CSS 4 và Motion.
+Website portfolio cá nhân, làm bằng Next.js 15, Tailwind CSS 4 và Motion, font Plus Jakarta Sans.
+Giao diện dùng chung phong cách với trang portfolio freelance: thẻ dự án có ảnh chụp thật tự cuộn khi rê chuột, con trỏ riêng, giao diện sáng/tối.
+
+Các phần trên trang: Đầu trang · Dự án (lọc Frontend/Fullstack, bấm để xem chi tiết) · Về tôi · Kinh nghiệm · Kỹ năng · Liên hệ.
 
 ## Chạy trên máy
 
@@ -21,8 +24,16 @@ Website có 2 ngôn ngữ: tiếng Việt ở `/`, tiếng Anh ở `/en` (nút V
 - Chữ trên nút, tiêu đề mục của cả 2 ngôn ngữ: **`src/i18n.ts`**.
 - CV: bản tiếng Việt `public/CV-Ngo-Nguyen-Chi-Cong.pdf`, bản tiếng Anh `public/CV-Ngo-Nguyen-Chi-Cong-EN.pdf`.
 
-- Đổi ảnh: thay file `public/avatar.jpg` (ảnh vuông, nền xanh xám như ảnh hiện tại sẽ hoà vào nền hero đẹp nhất).
-- Màu và font: `src/app/globals.css` (khối `@theme`).
+- Ảnh đại diện: `public/avatar.jpg`.
+- Hình ảnh từng dự án: **`src/data/visuals.ts`**, ghép theo `id` của dự án.
+  - `page`: ảnh chụp toàn trang thật trong `public/shots/` (hiện trong khung trình duyệt, rê chuột vào thẻ là tự cuộn từ đầu đến cuối trang;
+    trên điện thoại thẻ đi qua giữa màn hình thì tự cuộn; trong hộp thoại chi tiết thì người xem tự cuộn).
+  - `scene`: ảnh ghép nền trong suốt trong `public/covers/` cho dự án không có trang công khai (app di động, hệ thống nội bộ).
+  - Dự án mới chưa có ảnh thì thẻ chỉ hiện nền màu; chụp ảnh rồi thêm một dòng vào `visuals.ts`.
+  - `src/data/shots-blur.ts`: ảnh mờ rất nhỏ hiện trong lúc ảnh chụp đang tải (không bắt buộc).
+- Màu của giao diện sáng/tối: `src/app/globals.css` (khối `:root` là sáng, `:root[data-theme='dark']` là tối).
+  Lần đầu vào trang luôn là giao diện sáng; người xem bấm nút mặt trăng/mặt trời để đổi, trình duyệt nhớ lựa chọn.
+- Ảnh xem trước khi chia sẻ link (Facebook, Zalo, LinkedIn): `public/og/og-vi.jpg` và `public/og/og-en.jpg` (1200x630).
 
 ## Deploy lên Vercel
 

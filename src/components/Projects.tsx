@@ -1,176 +1,244 @@
 'use client';
 
-import { AnimatePresence, LayoutGroup, motion, useReducedMotion } from 'motion/react';
-import { useState } from 'react';
-import type { Role } from '@/data/profile';
+import { AnimatePresence, LayoutGroup, motion } from 'motion/react';
+import { useEffect, useRef, useState } from 'react';
+import type { Project, Role } from '@/data/profile';
 import { getContent, type Lang } from '@/i18n';
+import { ArrowRight, ArrowUpRight, Check, Close } from './Icons';
+import { Eyebrow, Reveal, Shot, btnDark, ease } from './ui';
+import { Magnetic, Tilt, Words, useTouchLive } from './fx';
 
 type Filter = 'all' | Role;
 const filters: Filter[] = ['all', 'Frontend', 'Fullstack'];
-const ease = [0.22, 1, 0.36, 1] as const;
 
 export default function Projects({ lang }: { lang: Lang }) {
   const { projects, t } = getContent(lang);
   const [filter, setFilter] = useState<Filter>('all');
-  const [open, setOpen] = useState<string | null>(projects[0].id);
-  const reduce = useReducedMotion();
-
+  const [open, setOpen] = useState<Project | null>(null);
   const list = filter === 'all' ? projects : projects.filter((p) => p.role === filter);
   const count = (f: Filter) => (f === 'all' ? projects.length : projects.filter((p) => p.role === f).length);
 
-  return (
-    <section id="du-an" className="mx-auto max-w-6xl px-5 py-24 sm:px-8 md:py-32">
-      <div className="flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
-        <div>
-          <h2 className="display text-[clamp(2.8rem,7vw,5rem)] font-[650]">{t.projects.title}</h2>
-          <p className="mt-4 max-w-[46ch] text-ink-soft">
-            {t.projects.intro(projects.length)}
-          </p>
-        </div>
+  // Điện thoại không rê chuột được: thẻ nào đi qua giữa màn hình thì trang trong thẻ tự cuộn
+  useTouchLive('#du-an', [filter]);
 
-        <LayoutGroup>
-          <div role="group" aria-label={t.projects.filterLabel} className="flex w-fit rounded-full bg-paper-2 p-1">
-            {filters.map((f) => {
-              const active = f === filter;
-              return (
+  return (
+    <section id="du-an" aria-labelledby="t-projects" className="mx-auto max-w-[76rem] px-5 py-24 sm:px-8 md:py-32">
+      <Reveal className="grid gap-6 lg:grid-cols-[1fr_minmax(0,26rem)] lg:items-end">
+        <div>
+          <Eyebrow>{t.projects.eyebrow}</Eyebrow>
+          <h2 id="t-projects" className="heading mt-4 text-[clamp(2.2rem,5vw,3.6rem)]">
+            <Words text={t.projects.title(projects.length)} />
+          </h2>
+        </div>
+        <p className="text-ink-soft">{t.projects.intro}</p>
+      </Reveal>
+
+      <LayoutGroup>
+        {/* overflow-x-auto cắt cả chiều dọc nên chừa khoảng đệm quanh nút để viền không bị cắt */}
+        <div role="group" aria-label={t.projects.filterLabel} className="-mx-4 mt-7 flex gap-2 overflow-x-auto px-4 py-3 [scrollbar-width:none] lg:overflow-visible">
+          {filters.map((f) => {
+            const on = filter === f;
+            return (
+              <Magnetic key={f} strength={0.18} className="shrink-0">
                 <button
-                  key={f}
-                  aria-pressed={active}
+                  type="button"
+                  aria-pressed={on}
                   onClick={() => setFilter(f)}
-                  className="relative rounded-full px-4 py-2 text-[0.95rem] font-medium"
+                  className={`relative shrink-0 rounded-full px-4 py-2.5 text-[0.95rem] font-semibold whitespace-nowrap transition-colors ${
+                    on ? 'text-paper' : 'text-ink-soft ring-1 ring-line hover:text-ink'
+                  }`}
                 >
-                  {active && (
-                    <motion.span
-                      layoutId="filter-pill"
-                      className="absolute inset-0 rounded-full bg-ink"
-                      transition={{ duration: reduce ? 0 : 0.35, ease }}
-                    />
-                  )}
-                  <span className={`relative ${active ? 'text-paper' : 'text-ink-soft'}`}>
-                    {f === 'all' ? t.projects.all : f} <span className="tabular-nums opacity-70">{count(f)}</span>
+                  {on && <motion.span layoutId="tab" transition={{ duration: 0.35, ease }} className="absolute inset-0 rounded-full bg-ink" />}
+                  <span className="relative">
+                    {f === 'all' ? t.projects.all : f} <span className="opacity-60">{count(f)}</span>
                   </span>
                 </button>
-              );
-            })}
-          </div>
-        </LayoutGroup>
-      </div>
-
-      <ul className="mt-14 border-t border-ink/15">
-        <AnimatePresence initial={false} mode="popLayout">
-          {list.map((p) => {
-            const isOpen = open === p.id;
-            return (
-              <motion.li
-                key={p.id}
-                layout={!reduce}
-                initial={reduce ? false : { opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={reduce ? undefined : { opacity: 0 }}
-                transition={{ duration: 0.3, ease }}
-                className="border-b border-ink/15"
-              >
-                <h3>
-                  <button
-                    onClick={() => setOpen(isOpen ? null : p.id)}
-                    aria-expanded={isOpen}
-                    aria-controls={`panel-${p.id}`}
-                    className="group grid w-full grid-cols-[1fr_auto] items-baseline gap-x-6 gap-y-1 py-6 text-left md:grid-cols-[9.5rem_1fr_auto_auto]"
-                  >
-                    <span className="order-3 col-span-2 text-sm tabular-nums text-ink-soft md:order-none md:col-span-1">
-                      {p.period}
-                    </span>
-                    <span className="min-w-0">
-                      <span className="display-wide block text-[1.6rem] font-semibold leading-tight transition-colors group-hover:text-sea md:text-[1.85rem]">
-                        {p.name}
-                      </span>
-                      <span className="mt-1 block text-ink-soft">{p.summary}</span>
-                    </span>
-                    <span
-                      className={`hidden rounded-full px-3 py-1 text-sm font-medium md:inline-block ${
-                        p.role === 'Fullstack' ? 'bg-slate text-paper' : 'bg-paper-2 text-ink'
-                      }`}
-                    >
-                      {p.role}
-                    </span>
-                    <span
-                      aria-hidden="true"
-                      className={`grid h-9 w-9 place-items-center self-center rounded-full border border-ink/20 transition-transform duration-300 ${
-                        isOpen ? 'rotate-45 bg-ink text-paper' : 'group-hover:border-ink'
-                      }`}
-                    >
-                      <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-                        <path d="M7 1v12M1 7h12" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
-                      </svg>
-                    </span>
-                  </button>
-                </h3>
-
-                <AnimatePresence initial={false}>
-                  {isOpen && (
-                    <motion.div
-                      id={`panel-${p.id}`}
-                      key="panel"
-                      initial={reduce ? false : { height: 0, opacity: 0 }}
-                      animate={{ height: 'auto', opacity: 1 }}
-                      exit={reduce ? undefined : { height: 0, opacity: 0 }}
-                      transition={{ duration: 0.45, ease }}
-                      className="overflow-hidden"
-                    >
-                      <div className="grid gap-8 pb-10 md:grid-cols-[9.5rem_1fr_17rem] md:gap-x-6">
-                        <div className="hidden md:block" />
-                        <div>
-                          <p className="max-w-[62ch]">{p.description}</p>
-                          <h4 className="mt-7 font-semibold">{t.projects.myPart}</h4>
-                          <ul className="mt-3 max-w-[62ch] space-y-2.5">
-                            {p.contributions.map((c) => (
-                              <li key={c} className="relative pl-5 text-ink-soft">
-                                <span className="absolute top-[0.7em] left-0 h-1.5 w-1.5 rounded-full bg-amber" />
-                                {c}
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                        <div className="md:border-l md:border-ink/15 md:pl-6">
-                          <span className="text-sm text-ink-soft md:hidden">{p.role}</span>
-                          <h4 className="mt-1 font-semibold md:mt-0">{t.projects.stack}</h4>
-                          <ul className="mt-3 flex flex-wrap gap-2">
-                            {p.stack.map((s) => (
-                              <li key={s} className="rounded-md border border-ink/15 bg-white/50 px-2.5 py-1 text-sm">
-                                {s}
-                              </li>
-                            ))}
-                          </ul>
-                          {p.link ? (
-                            <a
-                              href={p.link.href}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="mt-7 inline-flex items-center gap-2 rounded-full bg-ink px-5 py-2.5 font-medium text-paper transition-colors hover:bg-sea"
-                            >
-                              {t.projects.open}
-                              <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
-                                <path d="M3 9L9 3M4 3h5v5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-                              </svg>
-                            </a>
-                          ) : null}
-                          {p.link && (
-                            <p className="mt-2 text-sm text-ink-soft">
-                              {p.link.label}
-                              {p.link.note ? ` (${p.link.note})` : ''}
-                            </p>
-                          )}
-                          {p.linkNote && <p className="mt-7 text-sm text-ink-soft">{p.linkNote}.</p>}
-                        </div>
-                      </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </motion.li>
+              </Magnetic>
             );
           })}
+        </div>
+      </LayoutGroup>
+
+      <ul className="mt-7 grid gap-x-6 gap-y-12 md:grid-cols-2 lg:grid-cols-3">
+        <AnimatePresence initial={false} mode="popLayout">
+          {list.map((p, i) => (
+            <motion.li
+              key={p.id}
+              layout
+              initial={{ opacity: 0, y: 48, scale: 0.96 }}
+              whileInView={{ opacity: 1, y: 0, scale: 1 }}
+              viewport={{ once: true, margin: '0px 0px -8% 0px' }}
+              exit={{ opacity: 0, scale: 0.94, transition: { duration: 0.25 } }}
+              transition={{ duration: 0.75, ease, delay: (i % 3) * 0.09 }}
+            >
+              <ProjectCard p={p} lang={lang} onOpen={() => setOpen(p)} />
+            </motion.li>
+          ))}
         </AnimatePresence>
       </ul>
+
+      <ProjectDialog p={open} lang={lang} onClose={() => setOpen(null)} />
     </section>
+  );
+}
+
+// Thẻ dự án: bấm ảnh hoặc tên để xem chi tiết; tên miền bên dưới mở trang thật ở thẻ mới
+function ProjectCard({ p, lang, onOpen }: { p: Project; lang: Lang; onOpen: () => void }) {
+  const { t } = getContent(lang);
+  const shown = p.stack.slice(0, 3);
+  const more = p.stack.length - shown.length;
+  return (
+    <div className="group" data-live="">
+      <button
+        type="button"
+        onClick={onOpen}
+        aria-haspopup="dialog"
+        data-cursor="view"
+        data-cursor-label={t.projects.cursor}
+        className="block w-full text-left"
+      >
+        <Tilt className="block rounded-[1.5rem]" max={6}>
+          <span className="block overflow-hidden rounded-[1.5rem] ring-1 ring-black/5 transition-shadow duration-500 group-hover:shadow-[0_30px_60px_-30px_rgba(23,20,15,0.5)]">
+            <Shot id={p.id} alt={`${t.projects.shotAlt} ${p.name}`} sizes="(min-width: 1024px) 21rem, (min-width: 768px) 40vw, 80vw" />
+          </span>
+        </Tilt>
+        <span className="mt-5 flex flex-wrap items-center gap-2 text-sm font-semibold text-ink-soft">
+          <span className={`rounded-full px-2.5 py-0.5 text-[0.78rem] ${p.role === 'Fullstack' ? 'bg-ink text-paper' : 'bg-paper-2 text-ink'}`}>{p.role}</span>
+          <span className="tabular-nums">{p.period}</span>
+        </span>
+        <span className="mt-2 block text-[1.5rem] leading-tight font-extrabold tracking-tight transition-colors duration-300 group-hover:text-accent-ink">{p.name}</span>
+        <span className="mt-2 block text-ink-soft">{p.summary}</span>
+        <span className="mt-4 flex flex-wrap gap-1.5">
+          {shown.map((s) => (
+            <span key={s} className="rounded-md bg-card px-2 py-0.5 text-[0.8rem] font-medium text-ink-soft ring-1 ring-line">
+              {s}
+            </span>
+          ))}
+          {more > 0 && <span className="rounded-md px-1.5 py-0.5 text-[0.8rem] font-medium text-ink-soft">+{more}</span>}
+        </span>
+        <span className="mt-5 inline-flex items-center gap-1.5 font-semibold text-accent-ink">
+          {t.projects.more}
+          <ArrowRight className="transition-transform duration-300 group-hover:translate-x-1" />
+        </span>
+      </button>
+      {p.link ? (
+        <a
+          href={p.link.href}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="link-sweep mt-2 ml-0.5 inline-flex items-center gap-1.5 text-[0.95rem] font-semibold text-ink-soft transition-colors hover:text-ink"
+        >
+          {p.link.label}
+          {p.link.note && <span className="font-normal">({p.link.note})</span>}
+          <ArrowUpRight />
+          <span className="sr-only">{t.projects.newTab}</span>
+        </a>
+      ) : (
+        <p className="mt-2 ml-0.5 text-[0.95rem] text-ink-soft">{p.linkNote ?? t.projects.noLink}</p>
+      )}
+    </div>
+  );
+}
+
+function ProjectDialog({ p, lang, onClose }: { p: Project | null; lang: Lang; onClose: () => void }) {
+  const { t } = getContent(lang);
+  const ref = useRef<HTMLDialogElement>(null);
+
+  useEffect(() => {
+    const d = ref.current;
+    if (!d) return;
+    if (p && !d.open) d.showModal();
+    if (!p && d.open) d.close();
+  }, [p]);
+
+  return (
+    <dialog
+      ref={ref}
+      onClose={onClose}
+      onClick={(e) => e.target === e.currentTarget && onClose()}
+      aria-labelledby="dlg-title"
+      className="m-auto max-h-[92dvh] w-[min(64rem,calc(100vw-1.5rem))] overflow-y-auto overscroll-contain rounded-[1.75rem] bg-paper p-0 text-ink shadow-2xl"
+    >
+      {p && (
+        <div>
+          <div className="relative">
+            <Shot
+              id={p.id}
+              live="scroll"
+              hint={t.projects.scrollHint}
+              alt={`${t.projects.shotAlt} ${p.name}`}
+              sizes="(min-width: 1024px) 58rem, 92vw"
+              className="aspect-[16/9]! sm:aspect-[21/9]!"
+            />
+            <button
+              type="button"
+              onClick={onClose}
+              aria-label={t.projects.close}
+              autoFocus
+              className="absolute top-4 right-4 grid h-11 w-11 place-items-center rounded-full bg-paper/90 shadow-md backdrop-blur transition-colors hover:bg-card"
+            >
+              <Close />
+            </button>
+          </div>
+
+          <div className="grid gap-10 p-6 sm:p-10 md:grid-cols-[minmax(0,1fr)_17rem]">
+            <div>
+              <p className="text-sm font-semibold text-ink-soft">
+                {p.role} · <span className="tabular-nums">{p.period}</span>
+              </p>
+              <h3 id="dlg-title" className="heading mt-2 text-[clamp(1.9rem,4vw,2.8rem)]">
+                {p.name}
+              </h3>
+              <p className="mt-3 text-[1.1rem] font-semibold">{p.summary}</p>
+              <p className="mt-4 leading-relaxed text-ink-soft">{p.description}</p>
+
+              <h4 className="mt-8 text-sm font-bold tracking-wide text-ink-soft uppercase">{t.projects.myPart}</h4>
+              <ul className="mt-3 space-y-2.5">
+                {p.contributions.map((c, i) => (
+                  <motion.li
+                    key={`${p.id}-${i}`}
+                    initial={{ opacity: 0, x: -14 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.5, ease, delay: 0.2 + i * 0.07 }}
+                    className="flex gap-3"
+                  >
+                    <Check className="mt-1 shrink-0 text-accent-ink" />
+                    <span>{c}</span>
+                  </motion.li>
+                ))}
+              </ul>
+            </div>
+
+            <aside className="space-y-7 md:border-l md:border-line md:pl-8">
+              <div>
+                <h4 className="text-sm font-bold tracking-wide text-ink-soft uppercase">{t.projects.stack}</h4>
+                <ul className="mt-3 flex flex-wrap gap-2">
+                  {p.stack.map((s) => (
+                    <li key={s} className="rounded-md bg-card px-2.5 py-1 text-sm ring-1 ring-line">
+                      {s}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              {p.link ? (
+                <div>
+                  <a href={p.link.href} target="_blank" rel="noopener noreferrer" className={`${btnDark} shine h-11 px-5 text-[0.95rem]`}>
+                    {t.projects.open}
+                    <ArrowUpRight />
+                    <span className="sr-only">{t.projects.newTab}</span>
+                  </a>
+                  <p className="mt-2 text-sm text-ink-soft">
+                    {p.link.label}
+                    {p.link.note ? ` (${p.link.note})` : ''}
+                  </p>
+                </div>
+              ) : (
+                p.linkNote && <p className="text-sm text-ink-soft">{p.linkNote}.</p>
+              )}
+            </aside>
+          </div>
+        </div>
+      )}
+    </dialog>
   );
 }

@@ -1,17 +1,9 @@
-import type { Viewport } from 'next';
 import '../globals.css';
-import { siteMetadata } from '@/components/Site';
+import { RootDocument, siteMetadata, siteViewport } from '@/components/Site';
 
 export const metadata = siteMetadata('vi');
-
-export const viewport: Viewport = {
-  themeColor: '#375164',
-};
+export const viewport = siteViewport;
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
-  return (
-    <html lang="vi">
-      <body>{children}</body>
-    </html>
-  );
+  return <RootDocument lang="vi">{children}</RootDocument>;
 }

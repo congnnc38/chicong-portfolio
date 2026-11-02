@@ -1,28 +1,68 @@
-@import '@fontsource-variable/bricolage-grotesque/standard.css';
-@import '@fontsource/be-vietnam-pro/400.css';
-@import '@fontsource/be-vietnam-pro/500.css';
-@import '@fontsource/be-vietnam-pro/600.css';
+@import '@fontsource-variable/plus-jakarta-sans/index.css';
 @import 'tailwindcss';
 
-@theme {
-  /* Màu lấy từ phông nền ảnh chân dung để ảnh hoà vào hero */
-  --color-slate: #37546a;
-  --color-slate-deep: #22343f;
-  --color-paper: #edf1f3;
-  --color-paper-2: #e1e8ec;
-  --color-ink: #15232c;
-  --color-ink-soft: #4a5d6a;
-  --color-line: #7cc4e0;
-  --color-sea: #1c6f93;
-  --color-amber: #f0b44c;
+/*
+  Màu đọc qua biến CSS nên đổi giao diện sáng/tối chỉ cần đổi data-theme trên thẻ <html>.
+  Giao diện sáng là :root, giao diện tối là [data-theme='dark'].
+*/
+@theme inline {
+  --color-paper: var(--paper);
+  --color-paper-2: var(--paper-2);
+  --color-card: var(--card);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-line: var(--line);
+  --color-accent: var(--accent);
+  --color-accent-ink: var(--accent-ink);
+  --color-accent-deep: #c9390d;
+  --color-night: var(--night);
+  /* chữ sáng dùng trên nền tối cố định (khối Dịch vụ), không đổi theo giao diện */
+  --color-snow: #f6f4ef;
 
-  --font-display: 'Bricolage Grotesque Variable', 'Be Vietnam Pro', system-ui, sans-serif;
-  --font-sans: 'Be Vietnam Pro', system-ui, sans-serif;
+  --font-sans: 'Plus Jakarta Sans Variable', system-ui, sans-serif;
+}
+
+:root {
+  --paper: #f6f4ef;
+  --paper-2: #ece8df;
+  --card: #ffffff;
+  --ink: #17140f;
+  --ink-soft: #5f594f;
+  --line: rgb(23 20 15 / 0.12);
+  --accent: #ff5b2e;
+  --accent-ink: #d23f12;
+  --night: #17140f;
+  --shot-a: #fbf9f5;
+  --shot-b: #f2ede4;
+  color-scheme: light;
+}
+
+:root[data-theme='dark'] {
+  --paper: #12100d;
+  --paper-2: #1b1814;
+  --card: #1f1b17;
+  --ink: #f3efe7;
+  --ink-soft: #a69e92;
+  --line: rgb(243 239 231 / 0.12);
+  --accent: #ff6a3d;
+  --accent-ink: #ff8a63;
+  --night: #1d1915;
+  --shot-a: #2a241e;
+  --shot-b: #1c1813;
+  color-scheme: dark;
+}
+
+/* Hiệu ứng đổi giao diện: vòng tròn loang ra từ nút bấm (trình duyệt hỗ trợ View Transitions) */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
 }
 
 html {
+  interpolate-size: allow-keywords;
   scroll-behavior: smooth;
-  scroll-padding-top: 5rem;
+  scroll-padding-top: 5.5rem;
 }
 
 body {
@@ -36,52 +76,190 @@ body {
 }
 
 ::selection {
-  background: var(--color-amber);
-  color: var(--color-ink);
+  background: var(--color-accent);
+  color: #fff;
 }
 
 :focus-visible {
-  outline: 2px solid var(--color-amber);
+  outline: 2px solid var(--color-accent-ink);
   outline-offset: 3px;
+  border-radius: 6px;
+}
+
+.heading {
+  font-weight: 800;
+  letter-spacing: -0.035em;
+  line-height: 1.04;
+}
+
+/* Dải tên miền chạy ngang */
+.marquee {
+  animation: marquee 38s linear infinite;
+}
+.marquee:hover {
+  animation-play-state: paused;
+}
+@keyframes marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+.marquee-mask {
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 6%, #000 94%, transparent);
+  mask-image: linear-gradient(to right, transparent, #000 6%, #000 94%, transparent);
+}
+
+/* Vệt sáng lướt qua nút khi rê chuột */
+.shine {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+.shine::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(115deg, transparent 30%, rgb(255 255 255 / 0.4) 50%, transparent 70%);
+  transform: translateX(-120%);
+  transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.shine:hover::after {
+  transform: translateX(120%);
+}
+
+/* Gạch chân chạy ra khi rê chuột vào link menu */
+.nav-link {
+  position: relative;
+}
+.nav-link::after {
+  content: '';
+  position: absolute;
+  left: 0.875rem;
+  right: 0.875rem;
+  bottom: 0.3rem;
+  height: 2px;
   border-radius: 2px;
+  background: var(--color-accent);
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.nav-link:hover::after {
+  transform: scaleX(1);
+  transform-origin: left;
 }
 
-.display {
-  font-family: var(--font-display);
-  font-variation-settings: 'wdth' 80, 'opsz' 96;
-  letter-spacing: -0.02em;
-  line-height: 0.95;
+/* Con trỏ riêng (components/Cursor.tsx): ẩn con trỏ mặc định, trừ khi đang mở hộp thoại */
+html.has-cursor:not(:has(dialog[open])),
+html.has-cursor:not(:has(dialog[open])) * {
+  cursor: none !important;
 }
 
-.display-wide {
-  font-family: var(--font-display);
-  font-variation-settings: 'wdth' 100, 'opsz' 48;
-  letter-spacing: -0.015em;
+/* Đốm sáng đi theo chuột ở đầu trang */
+.hero-glow {
+  background: radial-gradient(520px circle at var(--mx, 50%) var(--my, -20%), color-mix(in oklab, var(--accent) 16%, transparent), transparent 65%);
+  opacity: 0;
+  transition: opacity 0.6s ease;
+}
+section:hover > .hero-glow {
+  opacity: 1;
+}
+
+/* Link chữ có gạch chân chạy ra khi rê chuột */
+.link-sweep {
+  background: linear-gradient(currentColor, currentColor) 0 100% / 0 2px no-repeat;
+  transition: background-size 0.45s cubic-bezier(0.22, 1, 0.36, 1), color 0.3s;
+}
+.link-sweep:hover {
+  background-size: 100% 2px;
+}
+
+/* Hộp thoại chi tiết dự án */
+dialog::backdrop {
+  background: rgb(23 20 15 / 0.55);
+  backdrop-filter: blur(4px);
+}
+dialog[open] {
+  animation: pop 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+@keyframes pop {
+  from {
+    opacity: 0;
+    transform: translateY(16px) scale(0.98);
+  }
+}
+
+/* Ảnh chụp toàn trang trong thẻ sản phẩm (PageShot.tsx): rê chuột hoặc Tab tới thẻ thì trang tự cuộn
+   từ đầu đến cuối, rời chuột thì cuộn nhanh về đầu. --dur tính theo độ dài trang, --thumb là tỉ lệ thanh cuộn. */
+.page-shot,
+.page-thumb {
+  transition:
+    translate 0.9s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.3s ease;
+}
+.page-thumb {
+  height: calc(97cqh * var(--thumb));
+  opacity: 0;
+}
+@media (hover: hover) {
+  .group:hover .page-shot,
+  .group:hover .page-thumb {
+    transition-duration: var(--dur), 0.3s;
+    transition-timing-function: cubic-bezier(0.45, 0.05, 0.55, 0.95), ease;
+    transition-delay: 0.15s, 0s;
+  }
+  .group:hover .page-shot {
+    translate: 0 calc(-100% + 100cqh);
+  }
+  .group:hover .page-thumb {
+    translate: 0 calc(97cqh - 100%);
+    opacity: 1;
+  }
+}
+/* Tab tới thẻ, hoặc trên điện thoại khi thẻ đi qua giữa màn hình (data-live-on do Products.tsx gắn) */
+.group:focus-visible .page-shot,
+.group:focus-visible .page-thumb,
+.group[data-live-on] .page-shot,
+.group[data-live-on] .page-thumb {
+  transition-duration: var(--dur), 0.3s;
+  transition-timing-function: cubic-bezier(0.45, 0.05, 0.55, 0.95), ease;
+  transition-delay: 0.3s, 0s;
+}
+.group:focus-visible .page-shot,
+.group[data-live-on] .page-shot {
+  translate: 0 calc(-100% + 100cqh);
+}
+.group:focus-visible .page-thumb,
+.group[data-live-on] .page-thumb {
+  translate: 0 calc(97cqh - 100%);
+  opacity: 1;
 }
 
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
   }
+  .page-shot,
+  .page-thumb {
+    translate: none !important;
+  }
+  .page-thumb {
+    opacity: 0 !important;
+  }
   *,
   *::before,
   *::after {
     animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
-}
-
-/* Ảnh chân dung hoà vào nền hero: mờ dần ở mép trên và hai bên */
-.portrait-mask {
-  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 24%), linear-gradient(to right, transparent 0%, #000 20%, #000 80%, transparent 100%);
-  -webkit-mask-composite: source-in;
-  mask-image: linear-gradient(to bottom, transparent 0%, #000 24%), linear-gradient(to right, transparent 0%, #000 20%, #000 80%, transparent 100%);
-  mask-composite: intersect;
-}
-
-@media (max-width: 767px) {
-  .portrait-mask {
-    -webkit-mask-image: radial-gradient(closest-side, #000 62%, transparent 100%);
-    mask-image: radial-gradient(closest-side, #000 62%, transparent 100%);
+  .marquee {
+    animation: none;
   }
+}
+
+/* Khoá cuộn trang khi đang mở hộp thoại */
+html:has(dialog[open]) {
+  overflow: hidden;
 }
