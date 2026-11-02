@@ -40,8 +40,8 @@ export const profile = {
     email: 'congnnc38@gmail.com',
     phone: '+84 33 224 9402',
     phoneHref: 'tel:+84332249402',
-    linkedin: 'https://www.linkedin.com/in/chicongzz',
-    linkedinLabel: 'in/chicongzz',
+    linkedin: 'https://www.linkedin.com/in/ngonguyenchicong',
+    linkedinLabel: 'in/ngonguyenchicong',
   },
   education: {
     school: 'Đại học Công nghiệp Hà Nội',
