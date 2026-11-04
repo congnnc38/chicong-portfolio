@@ -2,21 +2,22 @@
 
 import { AnimatePresence, LayoutGroup, motion } from 'motion/react';
 import { useEffect, useRef, useState } from 'react';
-import type { Project, Role } from '@/data/profile';
+import type { Kind, Project } from '@/data/profile';
 import { getContent, type Lang } from '@/i18n';
 import { ArrowRight, ArrowUpRight, Check, Close } from './Icons';
 import { Eyebrow, Reveal, Shot, btnDark, ease } from './ui';
 import { Magnetic, Tilt, Words, useTouchLive } from './fx';
 
-type Filter = 'all' | Role;
-const filters: Filter[] = ['all', 'Frontend', 'Fullstack'];
+// Lọc theo loại sản phẩm (vai trò của tôi ở mọi dự án web đều là Fullstack nên không lọc theo vai trò nữa)
+type Filter = 'all' | Kind;
+const filters: Filter[] = ['all', 'platform', 'news', 'mobile'];
 
 export default function Projects({ lang }: { lang: Lang }) {
   const { projects, t } = getContent(lang);
   const [filter, setFilter] = useState<Filter>('all');
   const [open, setOpen] = useState<Project | null>(null);
-  const list = filter === 'all' ? projects : projects.filter((p) => p.role === filter);
-  const count = (f: Filter) => (f === 'all' ? projects.length : projects.filter((p) => p.role === f).length);
+  const list = filter === 'all' ? projects : projects.filter((p) => p.kind === filter);
+  const count = (f: Filter) => (f === 'all' ? projects.length : projects.filter((p) => p.kind === f).length);
 
   // Điện thoại không rê chuột được: thẻ nào đi qua giữa màn hình thì trang trong thẻ tự cuộn
   useTouchLive('#du-an', [filter]);
@@ -50,7 +51,7 @@ export default function Projects({ lang }: { lang: Lang }) {
                 >
                   {on && <motion.span layoutId="tab" transition={{ duration: 0.35, ease }} className="absolute inset-0 rounded-full bg-ink" />}
                   <span className="relative">
-                    {f === 'all' ? t.projects.all : f} <span className="opacity-60">{count(f)}</span>
+                    {f === 'all' ? t.projects.all : t.projects.kinds[f]} <span className="opacity-60">{count(f)}</span>
                   </span>
                 </button>
               </Magnetic>

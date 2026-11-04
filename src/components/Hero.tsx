@@ -26,8 +26,8 @@ export default function Hero({ lang }: { lang: Lang }) {
   const fan = fanSpec.map((f) => ({ ...f, p: projects.find((p) => p.id === f.id)! }));
   // Trang đang chạy thật: có link và không phải bản dev
   const live = projects.filter((p) => p.link && !p.link.note);
-  // "Fullstack Developer, Frontend First": phần sau dấu phẩy được tô màu và gạch chân
-  const [titleLead, titleAccent] = profile.title.split(/,\s*/);
+  // "Fullstack Developer": chữ đầu tiên được tô màu và gạch chân
+  const [titleAccent, ...titleRest] = profile.title.split(' ');
   const { x, y, bind } = useParallaxPointer();
   useTouchLive('#top');
 
@@ -71,9 +71,8 @@ export default function Hero({ lang }: { lang: Lang }) {
               <Words text={profile.name} onView={false} delay={0.1} />
             </span>
             <span className="mt-3 block text-[clamp(1.6rem,3.2vw,2.6rem)] tracking-[-0.025em]">
-              <Words text={`${titleLead},`} onView={false} delay={0.3} />{' '}
               <span className="relative whitespace-nowrap text-accent-ink">
-                <Words text={titleAccent} onView={false} delay={0.42} />
+                <Words text={titleAccent} onView={false} delay={0.3} />
                 <svg aria-hidden="true" viewBox="0 0 200 12" preserveAspectRatio="none" className="absolute -bottom-1.5 left-0 h-2.5 w-full text-accent">
                   <motion.path
                     d="M2 9 C 50 2, 150 2, 198 8"
@@ -86,7 +85,8 @@ export default function Hero({ lang }: { lang: Lang }) {
                     transition={{ duration: 0.9, delay: 0.85, ease }}
                   />
                 </svg>
-              </span>
+              </span>{' '}
+              <Words text={titleRest.join(' ')} onView={false} delay={0.42} />
             </span>
           </h1>
 

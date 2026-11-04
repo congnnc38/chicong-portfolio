@@ -3,7 +3,7 @@
 Website portfolio cá nhân, làm bằng Next.js 15, Tailwind CSS 4 và Motion, font Plus Jakarta Sans.
 Giao diện dùng chung phong cách với trang portfolio freelance: thẻ dự án có ảnh chụp thật tự cuộn khi rê chuột, con trỏ riêng, giao diện sáng/tối.
 
-Các phần trên trang: Đầu trang · Dự án (lọc Frontend/Fullstack, bấm để xem chi tiết) · Về tôi · Kinh nghiệm · Kỹ năng · Liên hệ.
+Các phần trên trang: Đầu trang · Dự án (lọc theo loại: Nền tảng & CMS, Trang tin & website, App di động; bấm để xem chi tiết) · Về tôi · Kinh nghiệm · Kỹ năng · Liên hệ.
 
 ## Chạy trên máy
 
@@ -18,6 +18,7 @@ Mở http://localhost:3000.
 
 Toàn bộ chữ, dự án, kinh nghiệm, kỹ năng và thông tin liên hệ nằm trong **`src/data/profile.ts`**.
 Sửa ở đó là website đổi theo, không cần đụng vào component.
+Mỗi dự án có `role` (vai trò của tôi: `Fullstack` hoặc `Mobile`, hiện trên thẻ) và `kind` (loại sản phẩm dùng cho bộ lọc: `platform`, `news`, `mobile`).
 
 Website có 2 ngôn ngữ: tiếng Việt ở `/`, tiếng Anh ở `/en` (nút VI/EN trên thanh menu).
 - Nội dung tiếng Anh: **`src/data/profile.en.ts`** (cùng cấu trúc với `profile.ts`, sửa bên này thì nhớ sửa bên kia).
